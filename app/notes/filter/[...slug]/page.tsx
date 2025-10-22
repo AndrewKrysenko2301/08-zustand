@@ -5,11 +5,34 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
+import type { Metadata } from "next";
 
 interface Props {
   params: Promise<{ slug: string[] }>;
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const category = slug[0];
+
+  return {
+    title: `Notes: ${category}`,
+    description: `List of notes filtered by category: ${category}`,
+    openGraph: {
+      title: `Notes: ${category}`,
+      description: `Browse your ${category} notes on Note Hub.`,
+      url: `https://08-zustand-red-six.vercel.app/notes/filter/${category}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: "NoteHub notes preview",
+        },
+      ],
+    },
+  };
+}
 const topic = "";
 const page = 1;
 
