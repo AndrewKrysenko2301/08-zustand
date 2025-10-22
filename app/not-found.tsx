@@ -1,9 +1,4 @@
-"use client";
-
 import type { Metadata } from "next";
-import { useRouter } from "next/navigation";
-import css from "./Home.module.css";
-import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Not Found",
@@ -22,6 +17,12 @@ export const metadata: Metadata = {
     ],
   },
 };
+
+("use client");
+
+import { useRouter } from "next/navigation";
+import css from "./Home.module.css";
+import { useEffect } from "react";
 
 const NotFound = () => {
   const router = useRouter();
