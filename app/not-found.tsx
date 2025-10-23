@@ -1,5 +1,3 @@
-"use client";
-
 import { Metadata } from "next";
 import css from "./Home.module.css";
 
