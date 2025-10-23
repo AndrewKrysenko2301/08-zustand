@@ -1,48 +1,29 @@
-import type { Metadata } from "next";
+"use client";
+
+import { Metadata } from "next";
+import css from "./Home.module.css";
 
 export const metadata: Metadata = {
   title: "Not Found",
-  description: "Oops! The page you're looking for doesn't exist.",
+  description: "Oops! The page you’re looking for doesn’t exist.",
   openGraph: {
     title: "Not Found",
-    description: "Oops! The page you're looking for doesn't exist.",
+    description:
+      "404 — Page not found. Don’t worry, you can still explore Note Hub and manage your notes easily.",
     url: "https://08-zustand-red-six.vercel.app/",
     images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Note Hub preview image",
-      },
+      { url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg" },
     ],
   },
 };
 
-("use client");
-
-import { useRouter } from "next/navigation";
-import css from "./Home.module.css";
-import { useEffect } from "react";
-
-const NotFound = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => router.push("/"), 3000);
-    return () => clearTimeout(timer);
-  }, [router]);
-
+export default function NotFound() {
   return (
-    <>
+    <div className={`${css.container} ${css.main}`}>
       <h1 className={css.title}>404 - Page not found</h1>
       <p className={css.description}>
         Sorry, the page you are looking for does not exist.
-        <br />
-        <br />
-        You will be redirected to the homepage in a while
       </p>
-    </>
+    </div>
   );
-};
-
-export default NotFound;
+}

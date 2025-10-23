@@ -5,7 +5,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
-import type { Metadata } from "next";
+import { Metadata } from "next";
 
 interface Props {
   params: Promise<{ slug: string[] }>;
@@ -13,26 +13,21 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const category = slug[0];
 
   return {
-    title: `Notes: ${category}`,
-    description: `List of notes filtered by category: ${category}`,
+    title: `${slug[0]} Notes`,
+    description: `Notes with tag "${slug[0]}"`,
     openGraph: {
-      title: `Notes: ${category}`,
-      description: `Browse your ${category} notes on Note Hub.`,
-      url: `https://08-zustand-red-six.vercel.app/notes/filter/${category}`,
+      title: `Notes: ${slug[0]}`,
+      description: `Notes with tag "${slug[0]}"`,
+      url: `https://08-zustand-red-six.vercel.app/notes/filter/${slug[0]}`,
       images: [
-        {
-          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-          width: 1200,
-          height: 630,
-          alt: "NoteHub notes preview",
-        },
+        { url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg" },
       ],
     },
   };
 }
+
 const topic = "";
 const page = 1;
 
@@ -40,16 +35,16 @@ export default async function Notes({ params }: Props) {
   const queryClient = new QueryClient();
 
   const { slug } = await params;
-  const category = slug[0];
+  const tag = slug[0];
 
   await queryClient.prefetchQuery({
-    queryKey: ["notes", topic, page, category],
-    queryFn: () => fetchNotes(topic, page, category),
+    queryKey: ["notes", topic, page, tag],
+    queryFn: () => fetchNotes(topic, page, tag),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient category={category} />
+      <NotesClient tag={tag} />
     </HydrationBoundary>
   );
 }
